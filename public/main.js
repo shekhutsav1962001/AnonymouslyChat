@@ -14,7 +14,7 @@ messageForm.addEventListener('submit', (e) => {
 
 function sendMessage() {
   if (messageInput.value === '') return
-  
+
   const data = {
     name: nameInput.value,
     message: messageInput.value,
@@ -34,11 +34,14 @@ socket.on('chat-message', (data) => {
 
 function addMessageToUI(isOwnMessage, data) {
   clearFeedback()
+  let time = new Date();
+  let hours = time.getHours()
+  let minutes = time.getMinutes()
   const element = `
       <li class="${isOwnMessage ? 'message-right' : 'message-left'}">
           <p class="message">
             ${data.message}
-            <span>${data.name} ● ${moment(data.dateTime).fromNow()}</span>
+            <span>${data.name} ● ${hours}:${minutes}</span>
           </p>
         </li>
         `
@@ -80,9 +83,9 @@ function clearFeedback() {
   })
 }
 
-nameInput.addEventListener('blur',(e) => {
+nameInput.addEventListener('blur', (e) => {
   console.log(nameInput.value);
-  if (nameInput.value.trim()=="") {
+  if (nameInput.value.trim() == "") {
     nameInput.value = "anonymous"
   }
 })
